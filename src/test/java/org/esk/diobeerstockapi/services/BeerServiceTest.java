@@ -44,5 +44,7 @@ public class BeerServiceTest {
         assertThat(createdBeerDTO.getId(), is(equalTo(expectedBeerDTO.getId())));
         assertThat(createdBeerDTO.getName(), is(equalTo(expectedBeerDTO.getName())));
         assertThat(createdBeerDTO.getQuantity(), is(equalTo(expectedBeerDTO.getQuantity())));
+
+        assertThat(createdBeerDTO.getQuantity(), is(greaterThan(2)));
     }
 }
