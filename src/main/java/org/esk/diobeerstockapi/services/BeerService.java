@@ -5,6 +5,7 @@ import org.esk.diobeerstockapi.dtos.BeerDTO;
 import org.esk.diobeerstockapi.entities.Beer;
 import org.esk.diobeerstockapi.exceptions.BeerAlreadyRegisteredException;
 import org.esk.diobeerstockapi.exceptions.BeerNotFoundException;
+import org.esk.diobeerstockapi.exceptions.BeerStockExceededException;
 import org.esk.diobeerstockapi.mappers.BeerMapper;
 import org.esk.diobeerstockapi.repositories.BeerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,17 @@ public class BeerService {
     public void deleteById(Long id) throws BeerNotFoundException {
         verifyIfExists(id);
         beerRepository.deleteById(id);
+    }
+
+    public BeerDTO increment(Long id, int quantityToIncrement) throws BeerNotFoundException, BeerStockExceededException {
+        Beer beerToIncrementStock = verifyIfExists(id);
+        int quantityAfterIncrement = quantityToIncrement + beerToIncrementStock.getQuantity();
+        if (quantityAfterIncrement <= beerToIncrementStock.getMax()) {
+            beerToIncrementStock.setQuantity(beerToIncrementStock.getQuantity() + quantityToIncrement);
+            Beer incrementedBeerStock = beerRepository.save(beerToIncrementStock);
+            return beerMapper.toDTO(incrementedBeerStock);
+        }
+        throw new BeerStockExceededException(id, quantityToIncrement);
     }
 
     private void verifyIfIsAlreadyRegistered(String name) throws BeerAlreadyRegisteredException {

@@ -2,8 +2,10 @@ package org.esk.diobeerstockapi.controllers;
 
 import lombok.AllArgsConstructor;
 import org.esk.diobeerstockapi.dtos.BeerDTO;
+import org.esk.diobeerstockapi.dtos.QuantityDTO;
 import org.esk.diobeerstockapi.exceptions.BeerAlreadyRegisteredException;
 import org.esk.diobeerstockapi.exceptions.BeerNotFoundException;
+import org.esk.diobeerstockapi.exceptions.BeerStockExceededException;
 import org.esk.diobeerstockapi.services.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/beers")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class BeerController {
+public class BeerController implements BeerControllerDocs {
     private final BeerService beerService;
 
     @PostMapping
@@ -38,5 +40,10 @@ public class BeerController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) throws BeerNotFoundException {
         beerService.deleteById(id);
+    }
+
+    @PatchMapping("/{id}/increment")
+    public BeerDTO increment(@PathVariable Long id, @RequestBody @Valid QuantityDTO quantityDTO) throws BeerNotFoundException, BeerStockExceededException {
+        return beerService.increment(id, quantityDTO.getQuantity());
     }
 }
