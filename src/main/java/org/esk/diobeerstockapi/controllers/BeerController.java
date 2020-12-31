@@ -6,6 +6,7 @@ import org.esk.diobeerstockapi.dtos.QuantityDTO;
 import org.esk.diobeerstockapi.exceptions.BeerAlreadyRegisteredException;
 import org.esk.diobeerstockapi.exceptions.BeerNotFoundException;
 import org.esk.diobeerstockapi.exceptions.BeerStockExceededException;
+import org.esk.diobeerstockapi.exceptions.BeerStockMinimunException;
 import org.esk.diobeerstockapi.services.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,7 +49,7 @@ public class BeerController implements BeerControllerDocs {
     }
 
     @PatchMapping("/{id}/decrement")
-    public BeerDTO declement(@PathVariable Long id, @RequestBody @Valid QuantityDTO quantityDTO) throws BeerNotFoundException, BeerStockExceededException {
+    public BeerDTO decrement(@PathVariable Long id, @RequestBody @Valid QuantityDTO quantityDTO) throws BeerNotFoundException, BeerStockMinimunException {
         return beerService.decrement(id, quantityDTO.getQuantity());
     }
 
