@@ -4,6 +4,7 @@ import org.esk.diobeerstockapi.builders.BeerDTOBuilder;
 import org.esk.diobeerstockapi.dtos.BeerDTO;
 import org.esk.diobeerstockapi.entities.Beer;
 import org.esk.diobeerstockapi.exceptions.BeerAlreadyRegisteredException;
+import org.esk.diobeerstockapi.exceptions.BeerNotFoundException;
 import org.esk.diobeerstockapi.mappers.BeerMapper;
 import org.esk.diobeerstockapi.repositories.BeerRepository;
 import org.junit.jupiter.api.Test;
@@ -60,5 +61,20 @@ public class BeerServiceTest {
 
         // then
         assertThrows(BeerAlreadyRegisteredException.class, () -> beerService.createBeer(expectedBeerDTO));
+    }
+
+    @Test
+    void whenValidBeerNameIsGivenThenReturnABeer() throws BeerNotFoundException {
+        // given
+        BeerDTO expectedFoundBeerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        Beer expectedFoundBeer = beerMapper.toModel(expectedFoundBeerDTO);
+
+        // when
+        when(beerRepository.findByName(expectedFoundBeer.getName())).thenReturn(Optional.of(expectedFoundBeer));
+
+        // then
+        BeerDTO foundBeerDTO = beerService.findByName(expectedFoundBeerDTO.getName());
+
+        assertThat(foundBeerDTO, is(equalTo(expectedFoundBeerDTO)));
     }
 }
