@@ -25,6 +25,8 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BeerServiceTest {
+    private static final long INVALID_BEER_ID = 1L;
+
     @Mock
     private BeerRepository beerRepository;
 
@@ -155,5 +157,36 @@ public class BeerServiceTest {
 
         assertThat(expectedQuantityAfterIncrement, equalTo(incrementedBeerDTO.getQuantity()));
         assertThat(expectedQuantityAfterIncrement, lessThan(expectedBeerDTO.getMax()));
+    }
+
+    @Test
+    void whenIncrementIsGreatherThanMaxThenThrowException() {
+        BeerDTO expectedBeerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        Beer expectedBeer = beerMapper.toModel(expectedBeerDTO);
+
+        when(beerRepository.findById(expectedBeerDTO.getId())).thenReturn(Optional.of(expectedBeer));
+
+        int quantityToIncrement = 80;
+        assertThrows(BeerStockExceededException.class, () -> beerService.increment(expectedBeerDTO.getId(), quantityToIncrement));
+    }
+
+    @Test
+    void whenIncrementAfterSumIsGreatherThanMaxThenThrowException() {
+        BeerDTO expectedBeerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        Beer expectedBeer = beerMapper.toModel(expectedBeerDTO);
+
+        when(beerRepository.findById(expectedBeerDTO.getId())).thenReturn(Optional.of(expectedBeer));
+
+        int quantityToIncrement = 45;
+        assertThrows(BeerStockExceededException.class, () -> beerService.increment(expectedBeerDTO.getId(), quantityToIncrement));
+    }
+
+    @Test
+    void whenIncrementIsCalledWithInvalidIdThenThrowException() {
+        int quantityToIncrement = 10;
+
+        when(beerRepository.findById(INVALID_BEER_ID)).thenReturn(Optional.empty());
+
+        assertThrows(BeerNotFoundException.class, () -> beerService.increment(INVALID_BEER_ID, quantityToIncrement));
     }
 }
