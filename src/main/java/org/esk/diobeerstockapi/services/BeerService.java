@@ -61,7 +61,7 @@ public class BeerService {
     public BeerDTO decrement(Long id, int quantityToDecrement) throws BeerNotFoundException, BeerStockMinimunException {
         Beer beerToDecrementStock = verifyIfExists(id);
         int quantityAfterDecrement = beerToDecrementStock.getQuantity() - quantityToDecrement;
-        if (quantityAfterDecrement >= 1) {
+        if (quantityAfterDecrement >= 0) {
             beerToDecrementStock.setQuantity(beerToDecrementStock.getQuantity() - quantityToDecrement);
             Beer decrementedBeerStock = beerRepository.save(beerToDecrementStock);
             return beerMapper.toDTO(decrementedBeerStock);
