@@ -38,4 +38,8 @@ public class BeerDTO {
     @Enumerated(EnumType.STRING)
     @NotNull
     private BeerType type;
+
+    @NotNull
+    @Max(500)
+    private Double price;
 }

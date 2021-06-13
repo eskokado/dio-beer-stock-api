@@ -22,6 +22,9 @@ public class BeerDTOBuilder {
     private int quantity = 10;
 
     @Builder.Default
+    private Double price = 15.0;
+
+    @Builder.Default
     private BeerType type = BeerType.LAGER;
 
     public BeerDTO toBeerDTO() {
@@ -30,6 +33,7 @@ public class BeerDTOBuilder {
                 brand,
                 max,
                 quantity,
-                type);
+                type,
+                price);
     }
 }

@@ -32,4 +32,7 @@ public class Beer {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BeerType type;
+
+    @Column(nullable = false)
+    private Double price;
 }
