@@ -28,12 +28,14 @@ public class BeerDTOBuilder {
     private BeerType type = BeerType.LAGER;
 
     public BeerDTO toBeerDTO() {
-        return new BeerDTO(id,
-                name,
-                brand,
-                max,
-                quantity,
-                type,
-                price);
+        BeerDTO beerDTO = new BeerDTO();
+        beerDTO.setId(id);
+        beerDTO.setName(name);
+        beerDTO.setBrand(brand);
+        beerDTO.setMax(max);
+        beerDTO.setQuantity(quantity);
+        beerDTO.setType(type);
+        beerDTO.setPrice(price);
+        return beerDTO;
     }
 }

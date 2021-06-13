@@ -9,8 +9,11 @@ import org.esk.diobeerstockapi.enums.BeerType;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -42,4 +45,7 @@ public class BeerDTO {
     @NotNull
     @Max(500)
     private Double price;
+
+    @NotEmpty
+    private Set<OrderItemDTO> items = new HashSet<>();
 }

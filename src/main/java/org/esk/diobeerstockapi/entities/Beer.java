@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.esk.diobeerstockapi.enums.BeerType;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -35,4 +37,7 @@ public class Beer {
 
     @Column(nullable = false)
     private Double price;
+
+    @OneToMany(mappedBy = "beer")
+    private Set<OrderItem> items = new HashSet<>();
 }
