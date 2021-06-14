@@ -23,7 +23,7 @@ public class Order {
     @JoinColumn(name = "client_id",nullable = false)
     private Client client;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "id.order", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<OrderItem> items = new HashSet<>();
 
     public Order(Long id, LocalDate date, Client client) {

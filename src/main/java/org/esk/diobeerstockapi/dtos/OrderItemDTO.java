@@ -18,7 +18,7 @@ import javax.validation.constraints.NotEmpty;
 public class OrderItemDTO {
     @NotEmpty
     @Id
-    private OrderDTO order;
+    private OrderWithoutItemsDTO order;
 
     @NotEmpty
     @Id

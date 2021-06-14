@@ -10,6 +10,7 @@ import org.esk.diobeerstockapi.dtos.OrderItemDTO;
 import org.esk.diobeerstockapi.dtos.OrderDTO;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Set;
 
 @Builder
@@ -23,11 +24,15 @@ public class OrderDTOBuilder {
     @Builder.Default
     private ClientDTO client = ClientDTOBuilder.builder().build().toClientDTO();
 
+    @Builder.Default
+    private Set<OrderItemDTO> items = Collections.singleton(OrderItemDTOBuilder.builder().build().toOrderItemDTO());
+
     public OrderDTO toOrderDTO() {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setId(id);
         orderDTO.setDate(date);
         orderDTO.setClient(client);
+        orderDTO.setItems(items);
         return orderDTO;
     }
 }

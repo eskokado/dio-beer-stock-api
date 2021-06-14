@@ -1,6 +1,7 @@
 package org.esk.diobeerstockapi.services;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.esk.diobeerstockapi.dtos.ClientDTO;
 import org.esk.diobeerstockapi.entities.Client;
 import org.esk.diobeerstockapi.exceptions.ClientAlreadyRegisteredException;
@@ -23,12 +24,13 @@ public class ClientService {
     public ClientDTO createClient(ClientDTO clientDTO) throws ClientAlreadyRegisteredException {
         verifyIfIsAlreadyRegistered(clientDTO.getName());
         Client client = clientMapper.toModel(clientDTO);
+        client.setId(null);
         Client savedClient = clientRepository.save(client);
         return clientMapper.toDTO(savedClient);
     }
 
-    public ClientDTO updateById(Long id, ClientDTO clientDTO) throws ClientNotFoundException {
-        verifyIfExists(id);
+    public ClientDTO updateClient(ClientDTO clientDTO) throws ClientNotFoundException {
+        verifyIfExists(clientDTO.getId());
         Client clientToUpdate = clientMapper.toModel(clientDTO);
         Client updatedClient = clientRepository.save(clientToUpdate);
         return clientMapper.toDTO(updatedClient);
@@ -36,6 +38,11 @@ public class ClientService {
 
     public ClientDTO findByName(String name) throws ClientNotFoundException {
         Client foundClient = clientRepository.findByName(name).orElseThrow(() -> new ClientNotFoundException(name));
+        return clientMapper.toDTO(foundClient);
+    }
+
+    public ClientDTO findById(Long id) throws ClientNotFoundException {
+        Client foundClient = verifyIfExists(id);
         return clientMapper.toDTO(foundClient);
     }
 

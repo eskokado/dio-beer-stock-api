@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
@@ -48,7 +49,7 @@ public class ClientServiceTest {
 
         // when
         when(clientRepository.findByName(expectedClientDTO.getName())).thenReturn(Optional.empty());
-        when(clientRepository.save(expectedSavedClient)).thenReturn(expectedSavedClient);
+        when(clientRepository.save(Mockito.any())).thenReturn(expectedSavedClient);
 
         //then
         ClientDTO createdClientDTO = clientService.createClient(expectedClientDTO);
@@ -99,7 +100,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    void whenUpdateIsCalledWithValidIdAndClientUpdateGivenThenReturnAClienteUpdated() throws ClientNotFoundException {
+    void whenUpdateIsCalledWithValidClientUpdateGivenThenReturnAClientUpdated() throws ClientNotFoundException {
         // given
         ClientDTO expectedUpdatedClientDTO = ClientDTOBuilder.builder().build().toClientDTO();
         Client expectedUpdatedClient = clientMapper.toModel(expectedUpdatedClientDTO);
@@ -109,7 +110,7 @@ public class ClientServiceTest {
         when(clientRepository.save(expectedUpdatedClient)).thenReturn(expectedUpdatedClient);
 
         //then
-        ClientDTO updatedClientDTO = clientService.updateById(expectedUpdatedClientDTO.getId(), expectedUpdatedClientDTO);
+        ClientDTO updatedClientDTO = clientService.updateClient(expectedUpdatedClientDTO);
 
         assertThat(updatedClientDTO.getId(), is(equalTo(expectedUpdatedClientDTO.getId())));
         assertThat(updatedClientDTO.getName(), is(equalTo(expectedUpdatedClientDTO.getName())));
@@ -143,7 +144,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    void whenExclusionIsCalledWithValidIdThenABeerShouldBeDeleted() throws ClientNotFoundException {
+    void whenExclusionIsCalledWithValidIdThenAClientShouldBeDeleted() throws ClientNotFoundException {
         // given
         ClientDTO expectedDeletedClientDTO = ClientDTOBuilder.builder().build().toClientDTO();
         Client expectedDeletedClient = clientMapper.toModel(expectedDeletedClientDTO);

@@ -12,7 +12,7 @@ public class OrderItemDTOBuilder {
     private OrderItemDTO orderItem = new OrderItemDTO();
 
     public OrderItemDTO toOrderItemDTO() {
-        orderItem.setOrder(OrderDTOBuilder.builder().build().toOrderDTO());
+        orderItem.setOrder(OrderWithoutItemsDTOBuilder.builder().build().toOrderWithoutItemsDTO());
         orderItem.setBeer(BeerDTOBuilder.builder().build().toBeerDTO());
         orderItem.setAmount(1);
         orderItem.setPrice(15.0);
