@@ -46,6 +46,5 @@ public class BeerDTO {
     @Max(500)
     private Double price;
 
-    @NotEmpty
     private Set<OrderItemDTO> items = new HashSet<>();
 }

@@ -100,7 +100,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    void whenUpdateIsCalledWithValidClientUpdateGivenThenReturnAClientUpdated() throws ClientNotFoundException {
+    void whenUpdateIsCalledWithValidClientUpdateGivenThenReturnAClientUpdated() throws ClientNotFoundException, ClientAlreadyRegisteredException {
         // given
         ClientDTO expectedUpdatedClientDTO = ClientDTOBuilder.builder().build().toClientDTO();
         Client expectedUpdatedClient = clientMapper.toModel(expectedUpdatedClientDTO);

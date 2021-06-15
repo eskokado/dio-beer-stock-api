@@ -29,7 +29,7 @@ public class ClientService {
         return clientMapper.toDTO(savedClient);
     }
 
-    public ClientDTO updateClient(ClientDTO clientDTO) throws ClientNotFoundException {
+    public ClientDTO updateClient(ClientDTO clientDTO) throws ClientNotFoundException, ClientAlreadyRegisteredException {
         verifyIfExists(clientDTO.getId());
         Client clientToUpdate = clientMapper.toModel(clientDTO);
         Client updatedClient = clientRepository.save(clientToUpdate);

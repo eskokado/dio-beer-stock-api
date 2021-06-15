@@ -38,6 +38,6 @@ public class Beer {
     @Column(nullable = false)
     private Double price;
 
-//    @OneToMany(mappedBy = "id.beer", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    private Set<OrderItem> items = new HashSet<>();
+    @OneToMany(mappedBy = "id.beer", fetch = FetchType.LAZY)
+    private Set<OrderItem> items = new HashSet<>();
 }
