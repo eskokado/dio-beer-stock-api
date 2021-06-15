@@ -38,6 +38,10 @@ public class OrderService {
         return orderMapper.toDTO(orderUpdated);
     }
 
+    public OrderDTO findById(Long id) throws OrderNotFoundException {
+        return orderMapper.toDTO(verifyIfExists(id));
+    }
+
     private Order verifyIfExists(Long id) throws OrderNotFoundException {
         return orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
     }

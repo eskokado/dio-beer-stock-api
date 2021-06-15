@@ -2,6 +2,7 @@ package org.esk.diobeerstockapi.controllers;
 
 import org.esk.diobeerstockapi.builders.ClientDTOBuilder;
 import org.esk.diobeerstockapi.dtos.ClientDTO;
+import org.esk.diobeerstockapi.dtos.OrderDTO;
 import org.esk.diobeerstockapi.exceptions.ClientAlreadyRegisteredException;
 import org.esk.diobeerstockapi.exceptions.ClientNotFoundException;
 import org.esk.diobeerstockapi.services.ClientService;

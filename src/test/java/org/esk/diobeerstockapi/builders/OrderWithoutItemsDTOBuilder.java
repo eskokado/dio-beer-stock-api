@@ -16,7 +16,7 @@ public class OrderWithoutItemsDTOBuilder {
     private Long id = 1L;
 
     @Builder.Default
-    private LocalDate date = LocalDate.now();
+    private String date = "2021-06-15";
 
     @Builder.Default
     private ClientDTO client = ClientDTOBuilder.builder().build().toClientDTO();

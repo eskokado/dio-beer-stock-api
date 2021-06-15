@@ -10,6 +10,7 @@ import org.esk.diobeerstockapi.dtos.OrderItemDTO;
 import org.esk.diobeerstockapi.dtos.OrderDTO;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class OrderDTOBuilder {
     private Long id = 1L;
 
     @Builder.Default
-    private LocalDate date = LocalDate.now();
+    private String date = "2021-06-15";
 
     @Builder.Default
     private ClientDTO client = ClientDTOBuilder.builder().build().toClientDTO();

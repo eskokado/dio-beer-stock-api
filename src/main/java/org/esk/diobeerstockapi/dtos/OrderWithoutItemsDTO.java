@@ -18,7 +18,7 @@ public class OrderWithoutItemsDTO {
     private Long id;
 
     @NotEmpty
-    private LocalDate date;
+    private String date;
 
     @NotEmpty
     private ClientDTO client;
